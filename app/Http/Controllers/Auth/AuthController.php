@@ -35,9 +35,17 @@ class AuthController extends BaseController
     }
 
     public function login() {
+        $validator = Validator::make($request->all(),[
+            'email'=> 'required|email',
+            'password'=> 'required',
+        ]);
+        if ($validator->fails()) {  
+            return $this->sendError('Error de validacion', $validator->errors());  
+        }
+
         $credenciales = request(['email', 'password']);
         if (!$token = auth()->attempt($credenciales)) {
-            return $this->sendError('No se encuentra autorizado.');
+            return $this->sendError('Ingreso no valido.');
         }
         $success= $this->responseWithToken($token);
         return $this->sendResponse($success,'Bienvenido.');
@@ -49,7 +57,8 @@ class AuthController extends BaseController
     }
 
     public function refresh() {
-        $success = $this->responseWithToken(auth()->refresh()); 
+        $token = auth()->refresh();
+        $success = $this->responseWithToken($token); 
         return $this->sendResponse($success,'Token actualizado.');
     }
 
@@ -62,7 +71,7 @@ class AuthController extends BaseController
         return [
             'access_token' => $token,
             'token_type'=> 'bearer',
-            'expires_in' => auth()->factory()->getTTL() *60,
+            'expires_in' => auth()->factory()->getTTL() * 120,
         ];
     }
 }
