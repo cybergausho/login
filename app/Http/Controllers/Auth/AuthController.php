@@ -34,18 +34,18 @@ class AuthController extends BaseController
 
     }
 
-    public function login() {
+    public function login(Request $request) {
         $validator = Validator::make($request->all(),[
             'email'=> 'required|email',
             'password'=> 'required',
         ]);
         if ($validator->fails()) {  
-            return $this->sendError('Error de validacion', $validator->errors());  
+            return $this->sendError('Error de validacion', $validator->errors(), 500);  
         }
 
         $credenciales = request(['email', 'password']);
         if (!$token = auth()->attempt($credenciales)) {
-            return $this->sendError('Ingreso no valido.');
+            return $this->sendError('Error de correo o contraseña.');
         }
         $success= $this->responseWithToken($token);
         return $this->sendResponse($success,'Bienvenido.');

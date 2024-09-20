@@ -4,9 +4,6 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 Route::group([
     'middleware' => 'api',
@@ -19,6 +16,8 @@ Route::group([
     Route::post('/perfil', [AuthController::class, 'perfil'])->middleware('auth:api');
 });
 
-// Route::get('/user', function (Request $request){
-//     return $request->user();
-// })->middleware('auth:api');
+//crear rutas de la escuela
+
+/*
+https://www.youtube.com/watch?v=dUF4blOOZK4&t=1s
+*/
