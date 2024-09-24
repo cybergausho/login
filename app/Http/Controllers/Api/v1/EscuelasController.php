@@ -62,16 +62,8 @@ class EscuelasController extends BaseController
             if (is_null($escuela)) {
                 return $this->sendError('No se encontró la Escuela', 'Escuela Not Found');
             }
-            $escuela->cuatrigrama = $request->cuatrigrama;
-            $escuela->nombre = $request->nombre;
-            $escuela->telefono = $request->telefono;
-            $escuela->email = $request->email;
-            $escuela->provincia = $request->provincia;
-            $escuela->localidad = $request->localidad;
-            $escuela->maps = $request->maps;
-            $escuela->estado = $request->estado;
+            $escuela->update($request->all());
             
-            $escuela->save();
             return $this->sendResponse($escuela, 'Escuela actuallizada correctamente.');
 
         } catch (\Exception $e) {
