@@ -11,13 +11,17 @@ class Curso extends Model
 
     protected $table= 'cursos';
     protected $fillable = [
-        'cuatrigrama',
         'nombre',
-        'telefono',
-        'email',
-        'provincia',
-        'localidad',
-        'maps',
+        'id_categoria',
+        'id_formacion',
+        'duracion_numero',
+        'id_duracion',
         'estado'
     ];
+
+    public function extra()
+    {
+        return $this->hasOne(CursoExtra::class, 'curso_id');
+    }
+
 }

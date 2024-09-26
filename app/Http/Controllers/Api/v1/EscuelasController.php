@@ -46,7 +46,7 @@ class EscuelasController extends BaseController
             if (is_null($data)) {
                 return $this->sendError('No se encontró la Escuela', 'Escuela Not Found');
             }
-            return $this->sendResponse($data, 'Escuela Details Fetch Successfully !');
+            return $this->sendResponse($data, 'Escuela encontrada correctamente.');
         } catch (\Exception $e) {
             return $this->sendError('Error al buscar Escuela', $e->getMessage());
         }
@@ -64,7 +64,7 @@ class EscuelasController extends BaseController
             }
             $escuela->update($request->all());
             
-            return $this->sendResponse($escuela, 'Escuela actuallizada correctamente.');
+            return $this->sendResponse($escuela, 'Escuela actualizada correctamente.');
 
         } catch (\Exception $e) {
             return $this->sendError('Error al buscar Escuela', $e->getMessage());
