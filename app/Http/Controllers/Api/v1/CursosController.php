@@ -16,7 +16,7 @@ class CursosController extends BaseController
     public function index()
     {
         try {
-            $data = Curso::all();
+            $data = Curso::with(['categoria', 'formacion', 'duracion', 'modalidad'])->get();
             return $this->sendResponse($data, 'Listado de Cursos.');
         } catch (\Exception $e) {
             return $this->sendError('Error de busqueda cursos.', $e->getMessage());
@@ -31,7 +31,7 @@ class CursosController extends BaseController
         try {
             //$data = Curso::find($id);
             // Usar eager loading para traer también los datos de cursos_extra
-            $data = Curso::with('extra')->findOrFail($id);
+            $data = Curso::with([ 'categoria', 'formacion', 'duracion', 'modalidad', 'extra', 'ediciones', 'ediciones.escuela' ])->findOrFail($id);
             if (is_null($data)) {
                 return $this->sendError('No se encontró el curso', 'Escuela Not Found');
             }
@@ -50,10 +50,19 @@ class CursosController extends BaseController
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'id_categoria' => 'required|integer|exists:aux_categoria,id_aux_categoria',
+            'id_modalidad' => 'required|integer|exists:aux_modalidad,id_aux_modalidad',
+            'descripcion_corta' => 'required|string|max:255',
             'id_formacion' => 'required|integer|exists:aux_formacion,id_aux_formacion',
             'duracion_numero' => 'required|integer',
             'id_duracion' => 'required|integer|exists:aux_duracion,id_aux_duracion',
-            'estado' => 'boolean'
+            'estado' => 'boolean',
+            'destinatario' => 'string|max:255',
+            'requisitos' => 'string|max:255',
+            'objetivo' => 'string|max:300',
+            'descripcion_larga' => 'string|max:255',
+            'foto' => 'string|max:255',
+            'asignatura' => 'string|max:255',
+
         ]);
 
         //inicia transaccion...
@@ -66,8 +75,14 @@ class CursosController extends BaseController
 
             // Crear la entrada en cursos_extra
             CursoExtra::create([
-                'descripcion' => $validatedData['descripcion'],
                 'curso_id' => $curso->id, // relacionar id
+                'destinatario' => $validatedData['descripcion'],
+                'requisitos' => $validatedData['descripcion'],
+                'objetivo' => $validatedData['descripcion'],
+                'descripcion_larga' => $validatedData['descripcion'],
+                'foto' => $validatedData['descripcion'],
+                'asignatura' > $validatedData['asignatura']
+
                 //..continuara
             ]);
         });

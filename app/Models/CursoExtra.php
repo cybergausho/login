@@ -15,7 +15,6 @@ class CursoExtra extends Model
         'requisitos',
         'objetivo',
         'descripcion_larga',
-        'descripcion_corta',
         'foto',
         'asignatura'
     ];
