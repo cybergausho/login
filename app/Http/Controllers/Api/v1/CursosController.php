@@ -70,7 +70,13 @@ class CursosController extends BaseController
         DB::transaction(function () use ($validatedData) {
             $curso = Curso::create([
                 'nombre' => $validatedData['nombre'],
-                //... ...
+                'id_categoria' => $validatedData['id_categoria'],
+                'id_modalidad' => $validatedData['id_modalidad'],
+                'descripcion_corta' => $validatedData['descripcion_corta'],
+                'id_formacion' => $validatedData['id_formacion'],
+                'duracion_numero' => $validatedData['duracion_numero'],
+                'id_duracion' => $validatedData['id_duracion'],
+                'estado' => $validatedData['estado']
             ]);
 
             // Crear la entrada en cursos_extra
@@ -83,7 +89,6 @@ class CursosController extends BaseController
                 'foto' => $validatedData['descripcion'],
                 'asignatura' > $validatedData['asignatura']
 
-                //..continuara
             ]);
         });
 
