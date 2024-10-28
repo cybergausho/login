@@ -3,6 +3,9 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Api\v1\EscuelasController;
 use App\Http\Controllers\Api\v1\CursosController;
+use App\Http\Controllers\Api\v1\CorreosController;
+use App\Http\Controllers\Api\v1\PreguntasController;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,12 +23,16 @@ Route::group([
     Route::post('/perfil', [AuthController::class, 'perfil'])->middleware('auth:api');
 });
 
-//crear rutas de la escuela
+//crear rutas de la escuela y preguntas frecuentes
 Route::middleware('auth:api')->prefix('v1')->group(function(){
 
     Route::put('escuelas/{id}',[EscuelasController::class, 'update']);
     Route::post('escuelas',[EscuelasController::class, 'store']);
     Route::delete('escuelas/{id}',[EscuelasController::class, 'destroy']);
+
+    Route::put('preguntas/{id}',[PreguntasController::class, 'update']);
+    Route::post('preguntas',[PreguntasController::class, 'store']);
+    Route::delete('preguntas/{id}',[PreguntasController::class, 'destroy']);
 });
 
 Route::prefix('v1')->group(function(){
@@ -34,4 +41,8 @@ Route::prefix('v1')->group(function(){
     //cursos
     Route::get('cursos', [CursosController::class, 'index']);
     Route::get('cursos/{id}',[CursosController::class, 'show']);
+    Route::post('mail',[CorreosController::class, 'enviarCorreo']);
+    //preguntas frecuentes
+    Route::get('preguntas', [PreguntasController::class, 'index']);
+    Route::get('preguntas/{id}',[PreguntasController::class, 'show']);
 });

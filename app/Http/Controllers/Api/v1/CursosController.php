@@ -93,6 +93,7 @@ class CursosController extends BaseController
         });
 
         //return exitoso
+        return $this->sendResponse($validatedData, 'Curso creado con exito.');
 
     }
 
