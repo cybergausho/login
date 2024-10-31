@@ -28,8 +28,6 @@ class PreguntasController extends BaseController
     public function show($id)
     {
         try {
-            //$data = Curso::find($id);
-            // Usar eager loading para traer también los datos de cursos_extra
             $data = PreguntasFrecuentes::findOrFail($id);
             if (is_null($data)) {
                 return $this->sendError('No se encontró la pregunta', 'Escuela Not Found');

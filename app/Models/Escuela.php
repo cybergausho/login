@@ -18,7 +18,7 @@ class Escuela extends Model
         'provincia',
         'localidad',
         'maps',
-        'estado'
+        'estado' => 1
     ];
     
 }

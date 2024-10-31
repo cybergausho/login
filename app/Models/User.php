@@ -21,6 +21,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'rol' => 2
     ];
 
     /**
@@ -51,5 +52,10 @@ class User extends Authenticatable implements JWTSubject
     }
     public function getJWTCustomClaims(){
         return [];
+    }
+
+    // Método para verificar el rol
+    public function hasRole($rol) {
+        return $this->rol === $rol;
     }
 }

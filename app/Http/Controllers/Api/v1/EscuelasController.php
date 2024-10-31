@@ -26,14 +26,32 @@ class EscuelasController extends BaseController
      */
     public function store(Request $request)
     {
-        {
+        $validatedData = $request->validate([
+            'cuatrigrama' => 'required|string|max:5',
+            'nombre' => 'required|string|max:255',
+            'telefono' => 'required|string|max:50',
+            'email' => 'required|string|max:255',
+            'provincia' => 'required|int|max:10',
+            'localidad'=> 'required|int|max:10',
+            'maps' => 'required|string|max:255',
+            'estado' => 'boolean',
+
+        ]);
             try {
-                $escuela = Escuela::create($request->all());
+                $escuela = Escuela::create([
+                    'cuatrigrama' => $validatedData['cuatrigrama'],
+                    'nombre' =>  $validatedData['nombre'],
+                    'telefono' =>  $validatedData['telefono'],
+                    'email' =>  $validatedData['email'],
+                    'provincia' =>  $validatedData['provincia'],
+                    'localidad'=>  $validatedData['localidad'],
+                    'maps' =>  $validatedData['maps'],
+                    'estado' =>  $validatedData['estado']
+                ]);
                 return $this->sendResponse($escuela, 'Escuela creada exitosamente.');
             } catch (\Exception $exception) {
                 return $this->sendError('Error al crear una escuela', $exception->getMessage());
             }
-        }
     }
 
     /**

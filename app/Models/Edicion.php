@@ -18,7 +18,7 @@ class Edicion extends Model
         'fecha_apertura_inscripcion',
         'fecha_cierre_inscripcion',
         'id_user',
-        'estado'
+        'estado' => 1
     ];
 
     public function escuela()
